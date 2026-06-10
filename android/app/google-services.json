@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "245229668910",
+    "project_id": "moviflix-d827c",
+    "storage_bucket": "moviflix-d827c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:245229668910:android:aa3a847a970bf02ae5adbf",
+        "android_client_info": {
+          "package_name": "com.mtsoftai.moviflix"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2MccU2sDX7FaVkK8hOI8SWsxJnpSTgiA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

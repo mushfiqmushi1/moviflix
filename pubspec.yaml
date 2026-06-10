@@ -1,0 +1,72 @@
+name: moviflix
+description: "A premium movie streaming application."
+publish_to: 'none'
+
+version: 2.0.0+2
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State Management
+  provider: ^6.1.2
+
+  # Networking & API Fetching
+  http: ^1.2.1
+
+  # Image Caching for smooth UI
+  cached_network_image: ^3.3.1
+
+  # Video Player Webview Container
+  webview_flutter: ^4.7.0
+
+  # UI Loading Animations
+  flutter_spinkit: ^5.2.1
+
+  # Local Database for Watchlist
+  shared_preferences: ^2.2.3
+
+  # Cupertino Icons
+  cupertino_icons: ^1.0.6
+
+  # ── NEW: Firebase ──────────────────────────────────────────────
+  # Firebase Core (required for all Firebase services)
+  firebase_core: ^3.3.0
+
+  # Firebase Remote Config (control ads & force update remotely)
+  firebase_remote_config: ^5.1.0
+
+  # ── NEW: Ads ───────────────────────────────────────────────────
+  # StartApp SDK for banner & interstitial ads
+  startapp_sdk: ^1.0.1
+
+  # ── NEW: Update & Utilities ────────────────────────────────────
+  # Get current app version to compare with min_live_version
+  package_info_plus: ^8.0.0
+
+  # Open update URL in browser
+  url_launcher: ^6.3.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  # App Icon Setup package
+  flutter_launcher_icons: ^0.13.1
+
+# flutter_launcher_icons configuration
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon.png"
+  min_sdk_android: 21
+
+flutter:
+  uses-material-design: true
+
+  # Assets folder declaration
+  assets:
+    - assets/
