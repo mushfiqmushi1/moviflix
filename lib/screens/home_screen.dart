@@ -26,8 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
       Provider.of<MovieProvider>(context, listen: false).fetchAllHomeData();
     });
 
-    // ✅ Firebase config update হলে UI rebuild করো
-    // Data clear না করলেও ads/config instantly update হবে
+ 
     RemoteConfigService.addListener(_onConfigUpdated);
   }
 
@@ -37,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  // ✅ Config update হলে এই function call হবে → setState → UI rebuild
+ 
   void _onConfigUpdated() {
     if (mounted) setState(() {});
   }
@@ -96,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
         _buildMovieCategory(context, nonEmpty[i].title, nonEmpty[i].movies),
       );
 
-      // প্রতি ২টা category এর পর banner ad
+     
       if ((i + 1) % 2 == 0) {
         widgets.add(const BannerAdWidget());
       }
