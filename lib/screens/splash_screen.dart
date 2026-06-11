@@ -28,17 +28,17 @@ class _SplashScreenState extends State<SplashScreen>
 
     _animationController.forward();
 
-    // After 3s, check for update then navigate
+    
     Timer(const Duration(seconds: 3), () async {
       if (!mounted) return;
 
-      // Navigate to Home first
+     
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
 
-      // Then check for force update (shows dialog on top of HomeScreen)
+     
       if (mounted) {
         await UpdateService.checkForUpdate(context);
       }
