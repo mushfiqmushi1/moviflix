@@ -15,7 +15,7 @@ class AdService {
 
     _initialized = true;
 
-    // ✅ Interstitial শুধু তখনই load করবে যখন Firebase বলছে show করতে
+
     await _loadInterstitial();
   }
 
@@ -33,7 +33,7 @@ class AdService {
   }
 
   static Future<void> showInterstitial() async {
-    // ✅ Show করার আগে Firebase থেকে fresh value check
+    
     if (!RemoteConfigService.showInterstitialAd) {
       debugPrint('🚫 Interstitial disabled via RemoteConfig');
       return;
@@ -49,7 +49,7 @@ class AdService {
       if (shown) {
         _interstitialAd?.dispose();
         _interstitialAd = null;
-        _loadInterstitial(); // ✅ Next ad load করবে, কিন্তু disabled হলে load হবে না
+        _loadInterstitial(); 
       }
     }).onError((error, _) {
       debugPrint('StartApp interstitial show error: $error');
@@ -57,7 +57,7 @@ class AdService {
   }
 }
 
-// ✅ AppLifecycleObserver যোগ করা হয়েছে — app resume হলে banner refresh হবে
+
 class BannerAdWidget extends StatefulWidget {
   const BannerAdWidget({super.key});
 
@@ -73,18 +73,18 @@ class _BannerAdWidgetState extends State<BannerAdWidget>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this); // ✅ Lifecycle observer register
+    WidgetsBinding.instance.addObserver(this); 
     _loadBanner();
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this); // ✅ Memory leak এড়াতে
+    WidgetsBinding.instance.removeObserver(this);
     _bannerAd?.dispose();
     super.dispose();
   }
 
-  // ✅ App foreground এ আসলে banner refresh হবে
+ 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
@@ -94,7 +94,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget>
   }
 
   void _loadBanner() {
-    // ✅ Firebase disabled থাকলে existing ad dispose করে SizedBox দেখাবে
+  
     if (!RemoteConfigService.showBannerAd) {
       if (_bannerAd != null) {
         setState(() {
@@ -119,7 +119,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget>
 
   @override
   Widget build(BuildContext context) {
-    // ✅ প্রতি build এ Firebase থেকে fresh value নেবে
+    
     if (!RemoteConfigService.showBannerAd || _bannerAd == null) {
       return const SizedBox.shrink();
     }
