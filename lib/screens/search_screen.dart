@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:async'; // Timer এর জন্য ইমপোর্ট করা হলো
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:cached_network_image/cached_network_image.dart';
@@ -19,13 +19,12 @@ class _SearchScreenState extends State<SearchScreen> {
   List<Movie> searchResults = [];
   bool isLoading = false;
   final TextEditingController _searchController = TextEditingController();
-  Timer? _debounce; // লাইভ সার্চ কন্ট্রোল করার জন্য টাইমার
-
-  // লাইভ সার্চের ফাংশন
+  Timer? _debounce; 
+  
   void _onSearchChanged(String query) {
     if (_debounce?.isActive ?? false) _debounce!.cancel();
     
-    // ইউজার টাইপ করার মাঝে ৫০০ মিলি-সেকেন্ড থামলে তবেই API কল হবে
+   
     _debounce = Timer(const Duration(milliseconds: 500), () {
       _searchMovies(query);
     });
@@ -83,7 +82,7 @@ class _SearchScreenState extends State<SearchScreen> {
             hintStyle: TextStyle(color: AppColors.textGrey),
             border: InputBorder.none,
           ),
-          onChanged: _onSearchChanged, // কীবোর্ডে টাইপ করার সাথে সাথেই সার্চ শুরু হবে
+          onChanged: _onSearchChanged, 
         ),
         actions: [
           IconButton(
@@ -100,7 +99,7 @@ class _SearchScreenState extends State<SearchScreen> {
       body: isLoading
           ? const Center(child: CircularProgressIndicator(color: AppColors.primaryColor))
           : _searchController.text.isEmpty
-              ? const SizedBox.shrink() // সার্চবক্স ফাঁকা থাকলে স্ক্রিন একদম ক্লিন থাকবে (কোনো লেখা নেই)
+              ? const SizedBox.shrink()
               : searchResults.isEmpty
                   ? const Center(
                       child: Text(
