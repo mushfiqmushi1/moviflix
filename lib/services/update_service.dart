@@ -5,7 +5,7 @@ import 'remote_config_service.dart';
 import '../constants/app_colors.dart';
 
 class UpdateService {
-  /// Returns true if [current] version is older than [minimum]
+ 
   static bool isUpdateRequired(String current, String minimum) {
     final c = current.split('.').map(int.tryParse).map((v) => v ?? 0).toList();
     final m = minimum.split('.').map(int.tryParse).map((v) => v ?? 0).toList();
@@ -20,7 +20,7 @@ class UpdateService {
     return false;
   }
 
-  /// Call after navigating to HomeScreen — shows blocking dialog if update needed
+ 
   static Future<void> checkForUpdate(BuildContext context) async {
     try {
       final packageInfo = await PackageInfo.fromPlatform();
@@ -33,8 +33,7 @@ class UpdateService {
         _showUpdateDialog(context);
       }
     } catch (_) {
-      // Skip silently on error
-    }
+     
   }
 
   static void _showUpdateDialog(BuildContext context) {
@@ -42,7 +41,7 @@ class UpdateService {
       context: context,
       barrierDismissible: false,
       builder: (ctx) => PopScope(
-        // ✅ PopScope replaces deprecated WillPopScope
+       
         canPop: false,
         child: AlertDialog(
           backgroundColor: AppColors.cardColor,
