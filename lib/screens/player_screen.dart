@@ -21,19 +21,14 @@ class _PlayerScreenState extends State<PlayerScreen> {
   bool _isLoading = true;
   bool _isLandscape = false;
 
-  // ✅ AD CLOAKING SCRIPT
-  // Ads কে block করা হচ্ছে না — শুধু invisible করা হচ্ছে
-  // iframe মনে করবে ads exist করছে, কিন্তু user দেখবে না
-  // এতে video "ad blocked" বলে বন্ধ করবে না
+
   static const String _adCloakScript = '''
     (function() {
 
-      // ১. Popup/new window — খুলতে দেব না কিন্তু error দেব না
-      //    iframe ভাববে window খুলেছে (null return করলে সে ভাবে ok)
+     
       window.open = function(url, target, features) {
         console.log("Ad popup intercepted: " + url);
-        // একটা fake window object return করো
-        // iframe মনে করবে popup খুলেছে কিন্তু actually খুলবে না
+       
         return {
           closed: false,
           close: function() {},
@@ -42,11 +37,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
         };
       };
 
-      // ২. CSS inject করো — ads invisible কিন্তু technically present
-      //    display:none করলে ads detect করতে পারে, তাই opacity+size ব্যবহার
       var style = document.createElement('style');
       style.innerHTML = `
-        /* Ad iframes — invisible কিন্তু present */
+        
         iframe[src*="ads"], iframe[id*="ad"], iframe[class*="ad"],
         iframe[src*="doubleclick"], iframe[src*="googlesyndication"],
         iframe[src*="adservice"], iframe[src*="popup"],
@@ -62,8 +55,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
           left: -9999px !important;
         }
 
-        /* Fixed/absolute high z-index overlays — সব hide */
-        /* কিন্তু video player এর নিজের controls রাখব */
+       
         div[style*="z-index: 9"], div[style*="z-index:9"] {
           opacity: 0 !important;
           pointer-events: none !important;
@@ -71,7 +63,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
       `;
       document.head.appendChild(style);
 
-      // ৩. MutationObserver — নতুন ad elements যোগ হলে সাথে সাথে hide
+    
       var observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
           mutation.addedNodes.forEach(function(node) {
@@ -82,14 +74,14 @@ class _PlayerScreenState extends State<PlayerScreen> {
             var cls = (el.className || '').toLowerCase();
             var tag = (el.tagName || '').toLowerCase();
 
-            // Ad related elements চেনার উপায়
+           
             var isAd = 
               id.includes('ad') || id.includes('popup') || id.includes('overlay') ||
               cls.includes('ad') || cls.includes('popup') || cls.includes('overlay') ||
               cls.includes('banner') || cls.includes('interstitial');
 
             if (isAd) {
-              // block করছি না — invisible করছি শুধু
+             
               el.style.opacity = '0';
               el.style.pointerEvents = 'none';
               el.style.position = 'fixed';
@@ -100,12 +92,12 @@ class _PlayerScreenState extends State<PlayerScreen> {
               console.log("Ad cloaked: " + (id || cls));
             }
 
-            // সব anchor এর target blank বন্ধ
+           ধ
             if (tag === 'a') {
               el.setAttribute('target', '_self');
               el.addEventListener('click', function(e) {
                 var href = el.getAttribute('href') || '';
-                // external redirect হলে prevent
+            
                 if (href && !href.startsWith('#') && !href.startsWith('javascript')) {
                   var isVideoRelated = 
                     href.includes('vidsrc') || href.includes('embed') ||
@@ -122,7 +114,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
         });
       });
 
-      // Document ready হলে observe শুরু
+      
       if (document.body) {
         observer.observe(document.body, { childList: true, subtree: true });
       } else {
@@ -131,7 +123,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
         });
       }
 
-      // ৪. Existing elements এও apply করো (page already loaded থাকলে)
+    
       document.querySelectorAll('a').forEach(function(a) {
         a.setAttribute('target', '_self');
       });
@@ -159,12 +151,11 @@ class _PlayerScreenState extends State<PlayerScreen> {
       ..setNavigationDelegate(
         NavigationDelegate(
           onPageStarted: (String url) {
-            // Page শুরু হওয়ার সাথে সাথেই cloak script inject
-            // এতে ads আসার আগেই invisible হয়ে যাবে
+     
             _controller.runJavaScript(_adCloakScript);
           },
           onPageFinished: (String url) {
-            // Page finish হলে আবার inject (dynamic content এর জন্য)
+           
             _controller.runJavaScript(_adCloakScript);
             if (mounted) {
               setState(() => _isLoading = false);
@@ -173,14 +164,12 @@ class _PlayerScreenState extends State<PlayerScreen> {
           onNavigationRequest: (NavigationRequest request) {
             final url = request.url.toLowerCase();
 
-            // Non-http scheme সব block (javascript:, intent:, etc.)
+          
             if (!url.startsWith('http')) {
               return NavigationDecision.prevent;
             }
 
-            // শুধু main frame এর redirect check করো
-            // Sub-frame (iframe এর ভেতরের content) সব allow
-            // কারণ sub-frame block করলে video load হবে না
+           
             if (request.isMainFrame) {
               final allowedHosts = [
                 'vidsrc.mov',
@@ -266,7 +255,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                 child: CircularProgressIndicator(color: Colors.cyan),
               ),
 
-            // ব্যাক বাটন
+           
             Positioned(
               top: 20,
               left: 20,
@@ -279,7 +268,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
               ),
             ),
 
-            // রোটেশন বাটন
+            
             Positioned(
               top: 20,
               right: 20,
