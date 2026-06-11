@@ -17,7 +17,7 @@ class Movie {
     required this.releaseDate,
   });
 
-  // JSON থেকে ডেটা পার্স করার ফ্যাক্টরি মেথড
+  
   factory Movie.fromJson(Map<String, dynamic> json) {
     return Movie(
       id: json['id'] ?? 0,
