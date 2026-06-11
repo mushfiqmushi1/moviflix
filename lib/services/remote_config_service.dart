@@ -7,7 +7,7 @@ class RemoteConfigService with WidgetsBindingObserver {
       FirebaseRemoteConfig.instance;
   static RemoteConfigService? _instance;
 
-  // Keys
+  
   static const String _minLiveVersionKey = 'min_live_version';
   static const String _showBannerAdKey = 'show_banner_ad';
   static const String _showInterstitialAdKey = 'show_interstitial_ad';
@@ -18,7 +18,7 @@ class RemoteConfigService with WidgetsBindingObserver {
   static const String _server2UrlKey = 'server_2_url';
   static const String _server3UrlKey = 'server_3_url';
 
-  // ✅ Listeners — UI notify করার জন্য
+ 
   static final List<VoidCallback> _listeners = [];
 
   static void addListener(VoidCallback listener) {
@@ -38,7 +38,7 @@ class RemoteConfigService with WidgetsBindingObserver {
   static Future<void> initialize() async {
     await _remoteConfig.setConfigSettings(RemoteConfigSettings(
       fetchTimeout: const Duration(seconds: 10),
-      minimumFetchInterval: Duration.zero, // ✅ cache bypass
+      minimumFetchInterval: Duration.zero, 
     ));
 
     await _remoteConfig.setDefaults({
@@ -55,7 +55,7 @@ class RemoteConfigService with WidgetsBindingObserver {
 
     await _fetchAndActivate();
 
-    // ✅ App resume হলে re-fetch
+    
     _instance = RemoteConfigService._();
     WidgetsBinding.instance.addObserver(_instance!);
   }
@@ -71,7 +71,7 @@ class RemoteConfigService with WidgetsBindingObserver {
         'showInterstitialAd: ${_remoteConfig.getBool(_showInterstitialAdKey)} | '
         'server1: ${_remoteConfig.getString(_server1UrlKey)}',
       );
-      // ✅ Fetch হলে UI কে notify 
+      
       if (updated) _notifyListeners();
     } catch (e) {
       developer.log('RemoteConfig fetch failed: $e — using last known values');
@@ -86,7 +86,7 @@ class RemoteConfigService with WidgetsBindingObserver {
     }
   }
 
-  // Getters
+  
   static String get minLiveVersion =>
       _remoteConfig.getString(_minLiveVersionKey);
   static bool get showBannerAd => _remoteConfig.getBool(_showBannerAdKey);
