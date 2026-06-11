@@ -13,14 +13,14 @@ class MovieProvider with ChangeNotifier {
   bool isLoading = true;
   String errorMessage = '';
 
-  // অ্যাপ ওপেন হওয়ার সাথে সাথে সব ডেটা একসাথে ফেচ করার ফাংশন
+ 
   Future<void> fetchAllHomeData() async {
     isLoading = true;
     errorMessage = '';
     notifyListeners();
 
     try {
-      // Future.wait ব্যবহার করায় সব ক্যাটাগরির ডেটা একসাথে প্যারালালি লোড হবে (খুব ফাস্ট!)
+     
       await Future.wait([
         fetchTrending(),
         fetchTopRated(),
