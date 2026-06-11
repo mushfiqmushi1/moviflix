@@ -11,7 +11,7 @@ class DetailsScreen extends StatelessWidget {
 
   const DetailsScreen({super.key, required this.movie});
 
-  // ✅ Firebase Remote Config থেকে server list নেওয়া
+
   List<Map<String, String>> _getServers(String tmdbId) {
     return [
       {
@@ -36,7 +36,7 @@ class DetailsScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          // Background Backdrop Image
+      
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.45,
             width: double.infinity,
@@ -49,7 +49,7 @@ class DetailsScreen extends StatelessWidget {
             ),
           ),
 
-          // Gradient Overlay
+          
           Container(
             height: MediaQuery.of(context).size.height * 0.45,
             decoration: BoxDecoration(
@@ -65,20 +65,20 @@ class DetailsScreen extends StatelessWidget {
             ),
           ),
 
-          // Content Section
+        
           SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: MediaQuery.of(context).size.height * 0.3),
 
-                // Poster and Title Row
+               
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      // Mini Poster
+                   
                       Container(
                         height: 180,
                         width: 120,
@@ -101,7 +101,7 @@ class DetailsScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 15),
-                      // Title and Rating
+                    
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -133,7 +133,6 @@ class DetailsScreen extends StatelessWidget {
                   ),
                 ),
 
-                // Movie Overview
                 const Padding(
                   padding: EdgeInsets.only(left: 16, top: 25, bottom: 8),
                   child: Text("Storyline",
@@ -151,7 +150,7 @@ class DetailsScreen extends StatelessWidget {
                   ),
                 ),
 
-                // Streaming Servers Section
+                
                 const Padding(
                   padding: EdgeInsets.only(left: 16, top: 30, bottom: 15),
                   child: Text("Select Streaming Server",
@@ -161,7 +160,7 @@ class DetailsScreen extends StatelessWidget {
                           fontWeight: FontWeight.bold)),
                 ),
 
-                // ✅ Firebase Remote Config থেকে আসা ৩টা server button
+               
                 ...servers.map((server) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(
@@ -211,7 +210,7 @@ class DetailsScreen extends StatelessWidget {
             ),
           ),
 
-          // Back Button
+        
           Positioned(
             top: 45,
             left: 15,
